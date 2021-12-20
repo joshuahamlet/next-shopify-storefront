@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react'
 const Home: NextPage = ({ products }) => {
 
   const [pastaFilter, setPastaFilter] = useState('')
+  const [filterClicked, setFilterClicked] = useState(false)
 
   //console.log(products)
 
@@ -22,6 +23,10 @@ const Home: NextPage = ({ products }) => {
 
   const filterHandler = (selection:string) => {
     setPastaFilter(selection)
+  }
+
+  const filterClickedHandler = () => {
+    setFilterClicked(p => p = !p)
   }
 
   const displayCards = () => {
@@ -87,12 +92,25 @@ const Home: NextPage = ({ products }) => {
           </h1>
         </span>
 
-        <div>
-          FILTERS
-        <div onClick={() => filterHandler('short')}>Short</div>
-        <div onClick={() => filterHandler('long')}>Long</div>  
-        <div onClick={() => filterHandler('soup')}>Soup</div>  
-        <div onClick={() => filterHandler('')}>Clear</div>  
+        <div style={{display: 'flex', justifyContent: "flex-start", width: "100%", marginLeft: "3rem"}}>
+          <div onClick={filterClickedHandler} style={{ padding: "10px", borderRadius: "5px", backgroundColor: "purple", color: "white", cursor: "pointer"}}>FILTERS</div>
+            {
+              filterClicked && (
+              <div style={{position: "relative", width: "0px"}}>
+                <div className={styles.card} style={{display: "flex", justifyContent:"flex-start",position: "absolute", zIndex: 2, margin: 0, marginLeft: "5px", height:"auto", minWidth: "150px", width: "150px"}}>
+                  <div style={{position: "relative", height: "20px", width: "100%", display: "flex", justifyContent: "flex-end"}}>
+                    <div onClick={filterClickedHandler} style={{ cursor: "pointer", position: "absolute", padding: "0px 3px", margin: "3px 3px", borderRadius: "5px", backgroundColor: "purple", color: "white", cursor: "pointer", textAlign: 'center'}}>x</div>
+                  </div>
+                    <div style={{width: "100%", padding:"0px 20px 20px 20px", display: "flex", flexDirection: "column", justifyContent:"center", alignItems: "center"}}>
+                    <div style={{ margin: "2px", padding: "5px", borderRadius: "5px", backgroundColor: "purple", color: "white", cursor: "pointer", width: "80%", textAlign: 'center'}} onClick={() => filterHandler('short')}>Short</div>
+                    <div style={{ margin: "2px", padding: "5px", borderRadius: "5px", backgroundColor: "purple", color: "white", cursor: "pointer", width: "80%", textAlign: 'center'}} onClick={() => filterHandler('long')}>Long</div>  
+                    <div style={{ margin: "2px", padding: "5px", borderRadius: "5px", backgroundColor: "purple", color: "white", cursor: "pointer", width: "80%", textAlign: 'center'}} onClick={() => filterHandler('soup')}>Soup</div>  
+                    <div style={{ margin: "2px", padding: "5px", borderRadius: "5px", backgroundColor: "purple", color: "white", cursor: "pointer", width: "80%", textAlign: 'center'}} onClick={() => filterHandler('')}>Clear</div>  
+                  </div>
+                  </div>
+              </div>
+              )
+            }
         </div>
 
         <div className={styles.grid}>
