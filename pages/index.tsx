@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import Link from 'next/link'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { useAtom } from 'jotai'
@@ -37,10 +38,8 @@ const Home: NextPage = ({ products }) => {
       console.log("STUFF IS HAPPENING", products.filter(x => x.productType === pastaFilter))
       return (
         
-        <a key={p.id}
-          href={`http://localhost:3000/pasta/${p.id}`}
-          className={styles.card}
-        >
+        <Link key={p.id} href={`http://localhost:3000/pasta/${p.id}`}>
+        <a className={styles.card}>
           <h2 style={{margin: '15px'}}>{p.title}</h2>
           <div style={{ 
             position: 'relative',
@@ -73,6 +72,7 @@ const Home: NextPage = ({ products }) => {
             {p.description}
           </p>
         </a>
+        </Link>
         )
   })}
 
