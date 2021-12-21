@@ -26,36 +26,40 @@ const Pasta = ({product}) => {
           </h1>
 
           <Link href="/">
-            <a style={{ padding: "10px", borderRadius: "5px", backgroundColor: "purple", color: "white", cursor: "pointer", alignSelf: "flex-start", fontSize: "30px"}}>&#x2B05;</a>
+            <a style={{marginLeft: "2rem", padding: "5px 10px", borderRadius: "5px", backgroundColor: "purple", color: "white", cursor: "pointer", alignSelf: "flex-start", fontSize: "30px"}}>&#x2B05;</a>
           </Link>
 
-          <div className={styles.card}>
-          
-          <div style={{ 
-            position: 'relative',
-            
-            left: '50%',
-            transform: "translateX(-50%)",
-            width: '250px', 
-            height: '150px', 
-            margin: '0px', 
-            padding: '0px', 
-            overflow: 'hidden', 
-            boxShadow: '0 0 20px 5px #b8b8b8',
-            borderRadius: '10px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            alignSelf: 'center',
-            justifySelf:'center'
-          }}>
-            <Image placeholder='blur' blurDataURL={product.images[0].src} layout='fill' className={styles.cardImage} src={product.images[0].src}/>
+        <div className={styles.card}>
+          <div className={styles.grid}>
+            <div 
+            className={styles.gridImage}
+            style={{ 
+              position: 'relative',
+
+              left: '50%',
+              transform: "translateX(-50%)",
+              width: '400px', 
+              height: '240px', 
+              margin: '0px', 
+              padding: '0px', 
+              overflow: 'hidden', 
+              boxShadow: '0 0 20px 5px #b8b8b8',
+              borderRadius: '10px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              alignSelf: 'center',
+              justifySelf:'center',
+              marginTop: '30px',
+              marginBottom: '45px'
+            }}>
+              <Image placeholder='blur' blurDataURL={product.images[0].src} layout='fill' className={styles.cardImage} src={product.images[0].src}/>
+            </div>
+            <p className={styles.gridDescription} style={{ margin: '15px' }}>
+              {product.description}
+            </p>
+            <div className={styles.gridCheckout}>CHeckout Area</div>
           </div>
-          <p style={{
-            margin: '15px'  
-          }}>
-            {product.description}
-          </p>
         </div>
         </main>
     </div>
