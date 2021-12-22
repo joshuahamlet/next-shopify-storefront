@@ -1,5 +1,5 @@
 .container {
-  height: 100vh;
+  height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -11,6 +11,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 .grid {
@@ -24,17 +25,37 @@
 
 .gridImage {
   grid-area: i;
-  width: 100%;
+  /* width: 450px;  */
+  width: auto;
+  height: 270px;
+  place-content: center;
+  transform: translateX(-55%);
+  position: relative;
+  left: 50%; 
+  margin: 0px; 
+  padding: 0px; 
+  overflow: hidden; 
+  box-shadow: 0 0 20px 5px #b8b8b8;
+  border-radius: 10px;
+  display: flex;
+  margin-top: 0px;
+  margin-bottom: 20px;
+  margin-left: 15px;
+  margin-right: 10px
 }
 
 .gridCheckout {
   grid-area: c;
   min-width: 100%;
+  border: 2px solid blue;
+  border-radius: 5px;
+  padding: 5px
 }
 
 .gridDescription {
   grid-area: d;
-  width: 100%
+  width: 100%;
+  padding-right: 15px;
 }
 
 .card {
@@ -65,4 +86,55 @@
 .cardImage {
   object-fit: cover;
   object-position: 50% 50%;
+}
+
+@media screen and (max-width: 768px) {
+
+  .gridImage {
+    /* width: 360px; */
+    width: auto;
+    height: 216px;
+    margin-left: 15px;
+    margin-right: 5px;
+  }
+}
+
+@media screen and (max-width: 590px) {
+
+  .gridImage {
+    /* width: 300px; */
+    width: auto;
+    height: 180px;
+    margin-left: 5px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .grid {
+    grid-template-rows: 1fr, 1fr, 1fr;
+    grid-template-areas: 
+      "i i i i i i i i i i i i"
+      "c c c c c c c c c c c c"
+      "d d d d d d d d d d d d";
+  }
+
+  .gridImage {
+    width: auto;
+    height: 228px;
+    transform: translateX(-50%);
+    margin-left: 0;
+
+  }
+
+}
+
+@media screen and (max-width: 320px) {
+  .grid {
+    grid-template-rows: 1fr, 1fr, 1fr;
+    grid-template-areas: 
+      "i i i i i i i i i i i i"
+      "c c c c c c c c c c c c"
+      "d d d d d d d d d d d d";
+  }
+  
 }

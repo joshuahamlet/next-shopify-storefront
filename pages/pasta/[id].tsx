@@ -12,7 +12,6 @@ const Pasta = ({product}) => {
   const router = useRouter()
   const { id } = router.query
   return (
-    <>
     <div className={styles.container}>
       <Head>
         <title>Pasta: {` ${product.title}`}</title>
@@ -21,49 +20,51 @@ const Pasta = ({product}) => {
       </Head>
 
       <main className={styles.main}>
-          <h1>
-            <a className={`${styles.title} ${styles.textfocusin} display: inline`} href="https://nextjs.org">{product.title}</a>
-          </h1>
-
+        <div style={{display: "flex", justifyContent: "center", width: "100%", position: "relative"}}>
           <Link href="/">
-            <a style={{marginLeft: "2rem", padding: "5px 10px", borderRadius: "5px", backgroundColor: "purple", color: "white", cursor: "pointer", alignSelf: "flex-start", fontSize: "30px"}}>&#x2B05;</a>
+            <a style={{
+              left: "0", 
+              top: "50%",
+              transform: "translateY(-50%)", 
+              position: "absolute", 
+              padding: "5px 10px", 
+              borderRadius: "5px", 
+              backgroundColor: "purple", 
+              color: "white", 
+              cursor: "pointer", 
+              fontSize: "30px",
+              marginLeft: "1rem",
+
+
+            }}>
+              &#x2B05;
+            </a>
           </Link>
+          <h1 style={{display: "flex", margin: "1rem", width: "90%", justifyContent: "center"}}>
+            <a style={{textAlign: "center", width: "65%"}}>{product.title}</a>
+          </h1>
+          <div></div>
+        </div>
 
         <div className={styles.card}>
           <div className={styles.grid}>
-            <div 
-            className={styles.gridImage}
-            style={{ 
-              position: 'relative',
-
-              left: '50%',
-              transform: "translateX(-50%)",
-              width: '400px', 
-              height: '240px', 
-              margin: '0px', 
-              padding: '0px', 
-              overflow: 'hidden', 
-              boxShadow: '0 0 20px 5px #b8b8b8',
-              borderRadius: '10px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              alignSelf: 'center',
-              justifySelf:'center',
-              marginTop: '30px',
-              marginBottom: '45px'
-            }}>
+          
+            <div className={styles.gridImage}>
               <Image placeholder='blur' blurDataURL={product.images[0].src} layout='fill' className={styles.cardImage} src={product.images[0].src}/>
             </div>
-            <p className={styles.gridDescription} style={{ margin: '15px' }}>
+          
+            <p className={styles.gridDescription}>
               {product.description}
             </p>
-            <div className={styles.gridCheckout}>CHeckout Area</div>
+            <div className={styles.gridCheckout}>
+              <div style={{marginBottom: "30px"}}>Price: {` ${product.price}`}</div>
+              <div style={{textAlign: "center", backgroundColor: "purple", color: "white", borderRadius: "5px", margin: "7px", padding: "5px"}}>Buy</div>
+              <div style={{textAlign: "center", backgroundColor: "purple", color: "white", borderRadius: "5px", margin: "7px", padding: "5px"}}>Add to cart</div>
+            </div>
           </div>
         </div>
         </main>
     </div>
-    </>
   )
 }
 
