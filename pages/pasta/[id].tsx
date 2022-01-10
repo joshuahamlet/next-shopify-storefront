@@ -68,7 +68,7 @@ const Pasta = ({product}) => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async({params}) => {
+export const getStaticProps: GetStaticProps = async({params}:any) => {
   console.log('params', params)
   const client = Client.buildClient({
     domain: process.env.REACT_APP_SHOPIFY_DOMAIN, 
