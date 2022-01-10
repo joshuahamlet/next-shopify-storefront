@@ -9,7 +9,7 @@ import Client from 'shopify-buy'
 import { useEffect, useState } from 'react'
 
 
-const Home: NextPage = ({ products }) => {
+const Home: NextPage = ({ products }:any) => {
 
   const [pastaFilter, setPastaFilter] = useState('')
   const [filterClicked, setFilterClicked] = useState(false)
@@ -31,11 +31,11 @@ const Home: NextPage = ({ products }) => {
   }
 
   const displayCards = () => {
-    let filteredProducts = pastaFilter === '' ? products : products.filter(x => x.productType === pastaFilter)
+    let filteredProducts = pastaFilter === '' ? products : products.filter((x:any) => x.productType === pastaFilter)
 
-    return filteredProducts.map(p => {
+    return filteredProducts.map((p:any) => {
             
-      console.log("STUFF IS HAPPENING", products.filter(x => x.productType === pastaFilter))
+      console.log("STUFF IS HAPPENING", products.filter((x:any) => x.productType === pastaFilter))
       return (
         
         <Link key={p.id} href={`http://localhost:3000/pasta/${p.id}`}>
@@ -99,7 +99,7 @@ const Home: NextPage = ({ products }) => {
               <div style={{position: "relative", width: "0px"}}>
                 <div className={styles.card} style={{display: "flex", justifyContent:"flex-start",position: "absolute", zIndex: 2, margin: 0, marginLeft: "5px", height:"auto", minWidth: "150px", width: "150px"}}>
                   <div style={{position: "relative", height: "20px", width: "100%", display: "flex", justifyContent: "flex-end"}}>
-                    <div onClick={filterClickedHandler} style={{ cursor: "pointer", position: "absolute", padding: "0px 3px", margin: "3px 3px", borderRadius: "5px", backgroundColor: "purple", color: "white", cursor: "pointer", textAlign: 'center'}}>x</div>
+                    <div onClick={filterClickedHandler} style={{ position: "absolute", padding: "0px 3px", margin: "3px 3px", borderRadius: "5px", backgroundColor: "purple", color: "white", cursor: "pointer", textAlign: 'center'}}>x</div>
                   </div>
                     <div style={{width: "100%", padding:"0px 20px 20px 20px", display: "flex", flexDirection: "column", justifyContent:"center", alignItems: "center"}}>
                     <div style={{ margin: "2px", padding: "5px", borderRadius: "5px", backgroundColor: "purple", color: "white", cursor: "pointer", width: "80%", textAlign: 'center'}} onClick={() => filterHandler('short')}>Short</div>
@@ -144,7 +144,7 @@ export async function getStaticProps() {
 
   client.product.fetch('Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzcwNzQxMDc2NTQzMTk=').then((product) => {
     // Do something with the product
-    console.log('FUCKING PRODUCT',product.productType);
+    //console.log('FUCKING PRODUCT',product.productType);
   });
 
   let response = await client.product.fetchAll()
