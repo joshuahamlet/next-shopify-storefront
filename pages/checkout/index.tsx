@@ -2,7 +2,7 @@ import { GetStaticProps } from "next"
 import Head from "next/head"
 import Client from "shopify-buy"
 
-const Checkout = ({checkout}) => {
+const Checkout = ({checkout}:any) => {
   return (
     <>
       <Head>
