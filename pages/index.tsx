@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { useAtom } from 'jotai'
-import { productsAtom } from '../components/atoms'
+import { envStatusAtom, productsAtom } from '../components/atoms'
 import Client from 'shopify-buy'
 import { useEffect, useState } from 'react'
 
@@ -13,6 +13,7 @@ const Home: NextPage = ({ products }:any) => {
 
   const [pastaFilter, setPastaFilter] = useState('')
   const [filterClicked, setFilterClicked] = useState(false)
+  const [baseURL] = useAtom(envStatusAtom)
 
   //console.log(products)
 
@@ -38,7 +39,7 @@ const Home: NextPage = ({ products }:any) => {
       console.log("STUFF IS HAPPENING", products.filter((x:any) => x.productType === pastaFilter))
       return (
         
-        <Link key={p.id} href={`http://localhost:3000/pasta/${p.id}`}>
+        <Link key={p.id} href={`${baseURL}pasta/${p.id}`}>
         <a className={styles.card}>
           <h2 style={{margin: '15px'}}>{p.title}</h2>
           <div style={{ 
