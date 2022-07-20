@@ -4,9 +4,9 @@ import Link from 'next/link'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { useAtom } from 'jotai'
-import { currentIdAtom, envStatusAtom, pastaFilterAtom, productsAtom } from '../components/atoms'
+import { currentAnimationAtom, currentIdAtom, envStatusAtom, pastaFilterAtom, productsAtom } from '../components/atoms'
 import Client from 'shopify-buy'
-import { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useRouter } from 'next/router'
 
@@ -14,17 +14,30 @@ import { useRouter } from 'next/router'
 const Home: NextPage = ({ products }:any) => {
 
   const [pastaFilter, setPastaFilter] = useAtom(pastaFilterAtom)
+  const [currentAnimation, setCurrentAnimation] = useAtom(currentAnimationAtom)
   const [baseURL] = useAtom(envStatusAtom)
 
+
   const [currentId, setCurrentId] = useAtom(currentIdAtom)
+  const currentIdRef =useRef('')
+  const stayRef = useRef()
 
   useEffect(()=> {
-    console.log(displayCards())
-  }, [pastaFilter])
+    currentIdRef.current = currentId
+  }, [setCurrentId])
+
+  // useEffect(()=> {
+  //   console.log(displayCards())
+  //   console.log(currentAnimation)
+  // }, [pastaFilter])
 
   useEffect(()=> {
+    console.log("MAIN RENDERED")
     emptyIdHandler()
+    setCurrentAnimation('filter')
   }, [])
+
+  
 
   const [fetchedProducts, setFetchedProducts] = useAtom(productsAtom)
 
@@ -36,49 +49,95 @@ const Home: NextPage = ({ products }:any) => {
     setCurrentId('')
   }
 
+  const filterCurrentAnimationHandler = () => {
+    setCurrentAnimation('filter')
+  }
+
   const router = useRouter()
-  const { id } = router.query
+  const { id } = router.query 
 
-  const displayCards = () => {
+  const Cards = () => {
+
+    console.log("CARDS RENDERED")
     let filteredProducts = pastaFilter === '' ? products : pastaFilter === "fuck" ? [] : products.filter((x:any) => x.productType === pastaFilter)
-
+    
     return filteredProducts.map((p:any) => {
-            
-      console.log("STUFF IS HAPPENING", products.filter((x:any) => x.productType === pastaFilter))
-      return (
-        <motion.div
-          key={p.id} 
-          initial={{opacity: p.id === currentId ? 1 : 0 }}
-          animate={{opacity: 1, transition : { delay: p.id === currentId ? 0 : 1 }}}
-          exit={{opacity: p.id === currentId ? 1 : 0, transition : { duration: .5}}} 
-          layout="position"
-          layoutId={`productCard${p.id}`} 
-          className={styles.card}
-          onClick={()=> currentIdHandler(p.id)}
-        >
-        <Link key={p.id} href={`/pasta/${p.id}`}>
-          <a >
-            <motion.h2 style={{margin: '15px'}}>{p.title}</motion.h2>
-            <div className={styles["pasta-image"]}>
-            <Image placeholder='blur' blurDataURL={p.images[0].src} layout='fill' className={styles.cardImage} src={p.images[0].src} />
-            </div>
-            <p className={styles.description} style={{/*margin: '15px'*/}}>
+      //<Card p={p} />
+      p.id === currentId ? console.log(p.id) : console.log("nope")
+      return(
+      <motion.div key={currentId ? `update${p.id}` : p.id}>
+      <Link   href={`/pasta/${p.id}`}>
+        <a>
+          <motion.div
+            //key={p.id} 
+            initial={{
+              opacity: currentId ? 1:   0, 
+            }}
+            animate={{
+              opacity: 1, 
+              //transition : { delay: p.id === currentId ? 0 : 1 },
+              transition : { duration: 1.5}
+
+            }}
+            exit={{
+              opacity: p.id === currentId ? 1 : 0, 
+              transition : { duration: 2.5 },
+            }} 
+
+            layout="size"
+            layoutId={`productCard${p.id}`} 
+            className={styles.card}
+            onClick={()=> currentIdHandler(p.id)}
+          >
+            <h2 layoutId={`title${p.id}`} style={{margin: '15px'}}>
+              {p.title}
+            </h2>
+            <motion.div  initial={{x: "-50%"}}    className={styles["pasta-image"]}>
+              <Image placeholder='blur' blurDataURL={p.images[0].src} layout='fill' className={styles.cardImage} src={p.images[0].src} />
+            </motion.div>
+            <motion.p exit={{scale: 0}} className={styles.description} style={{/*margin: '15px'*/}}>
               {p.description}
-            </p>
-          </a>
-        </Link>
-        </motion.div>
-        )
-  })}
+            </motion.p>
+          </motion.div>
+        </a>
+      </Link>
+      </motion.div>
+      )
+  })
+  
+  } 
+  
+  
+  
 
   return (
     <div className={styles.container}>      
       <main className={styles.main}>
-        <div className={styles.grid}>
-          <AnimatePresence exitBeforeEnter>
-            {displayCards()}    
+        {/* <div className={styles.grid}> */}
+        <AnimatePresence exitBeforeEnter>
+
+        <motion.div className={styles.grid}
+          key={pastaFilter}
+          initial={{x:  "-100vw"}}
+          animate={{x: 0, transition: {duration: 1.75}}}
+          exit={{x:  "100vw", transition: {duration: 1.5} }}
+          >      
+
+          {/* <DisplayCards> */}
+          {/* <Cards/> */}
+          
+
+          {Cards()}
+          {/* </DisplayCards> */}
+          
+          
+          {/* {Cards()} */}
+        </motion.div>
           </AnimatePresence>
-        </div>
+
+        
+
+        {/* </div> */}
       </main>
 
       <footer className={styles.footer}>

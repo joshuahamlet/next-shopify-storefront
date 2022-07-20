@@ -37,7 +37,7 @@
 }
 
 .container-icon {
-  padding: 10px; 
+   
   border-radius: 5px; 
   background-color: purple; 
   color: white; 
@@ -68,7 +68,8 @@
 
 .fa-icon {
   height: 35px; 
-  width: 35px
+  width: 35px;
+  margin: 10px;
 }
 
 .card {

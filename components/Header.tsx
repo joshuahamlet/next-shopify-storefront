@@ -2,25 +2,32 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useAtom } from "jotai";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFilter, faArrowLeft, faHamburger } from '@fortawesome/free-solid-svg-icons'
 
 import styles from '../styles/Header.module.css'
-import { pastaFilterAtom } from "./atoms";
+import { currentAnimationAtom, filterClickedAtom, pastaFilterAtom } from "./atoms";
 
 const Header = (props) => {
-    
-  const [filterClicked, setFilterClicked] = useState(false)
+  
+  const [filterClicked, setFilterClicked] = useAtom(filterClickedAtom)
   const [_pastaFilter, setPastaFilter] = useAtom(pastaFilterAtom)
+  const [currentAnimation, setCurrentAnimation] = useAtom(currentAnimationAtom)
+
+  useEffect(()=> {
+    setCurrentAnimation('')
+    console.log("HEADER RENDERED")
+  }, [])
 
   const filterClickedHandler = () => {
+    
     setFilterClicked(p => p = !p)
   }
 
   const filterHandler = (selection:string) => {
-    setPastaFilter("fuck")
+    //setPastaFilter("fuck")
     setPastaFilter(selection)
   }
 
@@ -43,26 +50,26 @@ const Header = (props) => {
           className={styles["container-left"]}
         >    
 {/* icon 1 */}
-          <div className={styles["container-icon"]}>
+          <div onClick={e=> e.stopPropagation()} className={styles["container-icon"]}>
             <AnimatePresence exitBeforeEnter>
             {
               route === "/pasta/[id]" ?
               
+              <Link href="/">
+                <a>
               <motion.div 
                 key={`${route}`}
                 initial={{scale: 0}} 
                 animate={{scale: [0, 1.20, 1]}}
                 exit={{scale: 0}}
               >
-                <Link href="/">
-                  <a>
                     <FontAwesomeIcon 
                       className={styles["fa-icon"]} 
                       icon={faArrowLeft}
                     />
+              </motion.div>
                   </a>
                 </Link>
-              </motion.div>
          
               :
           
@@ -92,6 +99,7 @@ const Header = (props) => {
                 animate={{scale: 1}}
                 exit={{scale:0}}
                 style={{position: "relative", width: "0px", zIndex: 1}}
+                onClick={e => e.stopPropagation()}
               >
                 <div className={styles["card-filter"]}>
                   <div className={styles["filter-dismiss-container"]}>

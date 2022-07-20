@@ -7,3 +7,7 @@ export const envStatusAtom = atom(process.env.ENVIRONMENT === "dev" ? "http://lo
 export const currentIdAtom = atom('')
 
 export const pastaFilterAtom = atom('')
+
+export const currentAnimationAtom = atom('')
+
+export const filterClickedAtom = atom(false)
