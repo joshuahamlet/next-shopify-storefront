@@ -89,6 +89,7 @@ const Home: NextPage = ({ products }:any) => {
             className={styles.card}
             onClick={()=> currentIdHandler(p.id)}
           >
+                {/* @ts-ignore */}
             <h2 layoutId={`title${p.id}`} style={{margin: '15px'}}>
               {p.title}
             </h2>
